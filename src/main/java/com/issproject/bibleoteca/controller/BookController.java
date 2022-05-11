@@ -7,21 +7,23 @@ import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
+//@CrossOrigin
 @RestController
 @RequestMapping("/book")
-@CrossOrigin
 public class BookController {
 
     @Autowired
     private BookService bookService;
 
     @PostMapping("/add")
-    public String add(@RequestBody @NotNull Book book) {
-        bookService.saveBook(book);
-        return "New book was added";
+    public ResponseEntity<Book> add(@RequestBody @NotNull Book book) {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/book/add").toUriString());
+        return ResponseEntity.created(uri).body(bookService.saveBook(book));
     }
 
     @PostMapping("/update/{id}")
@@ -54,12 +56,12 @@ public class BookController {
 
     @PostMapping(path ="/addBook/{bookId}/to/{userId}")
     public ResponseEntity<User> addBookUser(@NotNull @PathVariable int bookId,@NotNull @PathVariable int userId){
-        return bookService.addBookToUser(bookId,userId);
+        return ResponseEntity.ok().body(bookService.addBookToUser(bookId,userId));
     }
 
     @PostMapping(path ="/remove/{bookId}")
-    public ResponseEntity<String> removeBookUser(@NotNull @PathVariable int bookId){
-        return bookService.removeBookFromUser(bookId);
+    public ResponseEntity<?> removeBookUser(@NotNull @PathVariable int bookId){
+        return ResponseEntity.ok().body(bookService.removeBookFromUser(bookId));
     }
 }
 

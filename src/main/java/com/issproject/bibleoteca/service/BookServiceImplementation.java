@@ -69,7 +69,7 @@ public class BookServiceImplementation implements BookService {
     }
 
     @Override
-    public ResponseEntity<User> addBookToUser(int bookId, int userId) {
+    public User addBookToUser(int bookId, int userId) {
         Book book = findBookById(bookId);
         if(book.getStatus().equals(AVAILABLE.name())) {
             User user = userService.findUserById(userId);
@@ -77,19 +77,19 @@ public class BookServiceImplementation implements BookService {
             book.setStatus(UNAVAILABLE.name());
             user.addBook(book);
             bookRepository.save(book);
-            return new ResponseEntity<>(user,HttpStatus.OK);
+            return user;
         }
         return null;
     }
 
     @Override
-    public ResponseEntity<String> removeBookFromUser(int bookId) {
+    public String removeBookFromUser(int bookId) {
         Book book = findBookById(bookId);
         User bookUser = book.getUser();
         book.setUser(null);
         book.setStatus(AVAILABLE.name());
         bookUser.removeBook(book);
         bookRepository.save(book);
-        return new ResponseEntity<>("Removed book from user successfully",HttpStatus.OK);
+        return "Removed book from user successfully";
     }
 }

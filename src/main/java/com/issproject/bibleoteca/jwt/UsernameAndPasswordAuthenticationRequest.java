@@ -1,13 +1,11 @@
-package com.issproject.bibleoteca.model;
+package com.issproject.bibleoteca.jwt;
 
-public class AuthProvider {
-    
+public class UsernameAndPasswordAuthenticationRequest {
+
     private String username;
     private String password;
 
-    public AuthProvider(String username, String password) {
-        this.username = username;
-        this.password = password;
+    public UsernameAndPasswordAuthenticationRequest() {
     }
 
     public String getUsername() {

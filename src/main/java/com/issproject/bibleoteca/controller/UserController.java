@@ -2,15 +2,18 @@ package com.issproject.bibleoteca.controller;
 
 import com.issproject.bibleoteca.model.User;
 import com.issproject.bibleoteca.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
+//@CrossOrigin
 @RestController
 @RequestMapping("/user")
-@CrossOrigin
+@RequiredArgsConstructor
 public class UserController {
 
     @Autowired
@@ -18,7 +21,7 @@ public class UserController {
 
     @GetMapping(path ="/{userId}")
     public User getUser(@PathVariable int userId){
-        return userService.findAll()
+        return userService.getUsers()
                 .stream()
                 .filter(user -> userId == user.getId())
                 .findFirst()
@@ -26,8 +29,8 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getAllUsers(){
-        return userService.findAll();
+    public ResponseEntity<List<User>> getAllUsers(){
+        return ResponseEntity.ok().body(userService.getUsers());
     }
 
 //    @GetMapping(path = "/subscriber")

@@ -9,12 +9,12 @@ import java.util.List;
 
 public interface BookService {
 
-    public Book saveBook(Book book);
-    public List<Book> findAllBooks();
-    public void deleteBook(Integer id);
-    public Book findBookById(Integer id);
-    public void updateBook(Book book, Integer id);
-    public void updateBookStatus(String status, Integer id);
-    public ResponseEntity<User> addBookToUser(int bookId, int userId);
-    public ResponseEntity<String> removeBookFromUser(int bookId);
+    Book saveBook(Book book);
+    List<Book> findAllBooks();
+    void deleteBook(Integer id);
+    Book findBookById(Integer id);
+    void updateBook(Book book, Integer id);
+    void updateBookStatus(String status, Integer id);
+    User addBookToUser(int bookId, int userId);
+    String removeBookFromUser(int bookId);
 }
