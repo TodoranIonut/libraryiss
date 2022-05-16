@@ -36,7 +36,6 @@ public class LoginController {
         return userService.loginUser(username, password);
     }
 
-
     @PostMapping(path ="login2")
     public ResponseEntity<String> getUser(@RequestBody UsernameAndPasswordAuthenticationRequest credentials){
         User loginUser = userService.getUsers()

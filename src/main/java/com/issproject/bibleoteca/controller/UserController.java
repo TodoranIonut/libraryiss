@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class UserController {
     private UserService userService;
 
     @GetMapping(path ="/{userId}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public User getUser(@PathVariable int userId){
         return userService.getUsers()
                 .stream()
@@ -29,6 +31,7 @@ public class UserController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<List<User>> getAllUsers(){
         return ResponseEntity.ok().body(userService.getUsers());
     }
